@@ -1,24 +1,58 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param, Patch, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { CreateTaskDto } from './DTO/create-task.dto';
 import { TasksService } from './tasks.service';
-import { Task } from './tasks.model';
-import { CreateTaskDTO } from './dto/create-task.dto';
+import { Task, TaskStatus } from './tasks.model';
+import { SearchDto } from './DTO/search.dto';
+import { StatusValidationPipe } from './pipes/status-validation.pipe';
 
 @Controller('tasks')
 export class TasksController {
-    constructor(private taskService: TasksService) {}
+    constructor(private readonly tasksService : TasksService) {}
 
     @Get()
-    getAllTasks():Task[]{
-        return this.taskService.getAllTasks();
+    getAllTasks(@Query() searchDto:SearchDto):Task[]{
+
+        if(Object.keys(searchDto).length){
+            console.log(searchDto);
+            return this.tasksService.searchTask(searchDto)
+        }
+        else{
+            return this.tasksService.getAllTasks();
+        }
+        
+    }
+  
+    @Post()
+    @UsePipes(ValidationPipe)
+    addTask(@Body() createTaskDto : CreateTaskDto):Task{
+        return this.tasksService.addTask(createTaskDto);
     }
 
-    @Post()
-    creatTask(@Body() createTaskDTO : CreateTaskDTO ):Task{
-        return this.taskService.createTask(createTaskDTO);
+    @Delete('/:id')
+    deleteTask(@Param('id') id:string ):void{
+        this.tasksService.deleteTask(id);
+        
     }
 
     @Get('/:id')
-    getTaskById(@Param('id') id: string): Task{
-        return this.taskService.getTaskById(id);
+    getTaskById(@Param('id') id:string){
+        return this.tasksService.getTaskById(id);
     }
+
+    @Patch('/:id')
+    updateTask(
+        @Param('id') id:string ,
+        @Body() createTaskDto :CreateTaskDto 
+    ):Task{
+        return this.tasksService.updateTask(id,createTaskDto);
+    }
+
+    @Patch('/:id/status')
+    updateTaskStatus(
+        @Param('id') id:string ,
+        @Body('status',StatusValidationPipe) status:TaskStatus 
+    ):Task{
+        return this.tasksService.updateTaskStatus(id,status);
+    }
+    
 }
