@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, Delete, Param, Patch, Query, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
 import { CreateTaskDto } from './DTO/create-task.dto';
-import { TasksService } from './tasks.service';
+import { TaskService } from './task.service';
 import { TaskStatus } from './task-status.enum';
 import { SearchDto } from './DTO/search.dto';
 import { StatusValidationPipe } from './pipes/status-validation.pipe';
 import { Task } from './task.entity';
 
 @Controller('tasks')
-export class TasksController {
-    constructor(private readonly tasksService : TasksService) {}
+export class TaskController {
+    constructor(private readonly tasksService : TaskService) {}
 
     @Get()
     getAllTasks(@Query() searchDto:SearchDto):Promise<Task[]>{

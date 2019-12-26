@@ -1,7 +1,7 @@
 TODO:
 
 - GraphQl
-- Code refining and files renaming 
+- Code refining and files renaming ✔️
 - GUI
 - Extend functionality 
 - Authentication 
