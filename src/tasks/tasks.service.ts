@@ -16,6 +16,10 @@ export class TasksService {
         private taskRepository : TaskRepository
     ){}
 
+    async getTasks(searchDto : SearchDto):Promise<Task[]>{
+        return this.taskRepository.getTasks(searchDto)
+    }
+
     async getTaskById(id:number){
         const found = await this.taskRepository.findOne(id);
         if(!found){
@@ -25,15 +29,7 @@ export class TasksService {
     }
 
     async addTask(createTaskDto:CreateTaskDto):Promise<Task>{
-        const task = new Task();
-        const {title , description} = createTaskDto ;
-        task.description = description;
-        task.title = title;
-        task.status = TaskStatus.OPEN;
-
-        await task.save();
-
-        return task;
+        return this.taskRepository.addTask(createTaskDto);
     }
 
     async deleteTask(id : number):Promise<void>{
@@ -44,15 +40,16 @@ export class TasksService {
     async updateTask(id:number , createTaskDto:CreateTaskDto):Promise<Task>{
         const {title , description} = createTaskDto ;
         const task = await this.getTaskById(id);
-        task.title = title;
-        task.description = description ;
+
+        if(title) task.title = title;
+        if(description) task.description = description ;
+        
         await task.save()
 
         return task;
     }
 
     async updateTaskStatus(id:number , taskStatus:TaskStatus):Promise<Task>{
-
         const task = await this.getTaskById(id);
         task.status = taskStatus ;
         await task.save();

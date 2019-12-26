@@ -10,18 +10,10 @@ import { Task } from './task.entity';
 export class TasksController {
     constructor(private readonly tasksService : TasksService) {}
 
-    // @Get()
-    // getAllTasks(@Query() searchDto:SearchDto):Task[]{
-
-    //     if(Object.keys(searchDto).length){
-    //         console.log(searchDto);
-    //         return this.tasksService.searchTask(searchDto)
-    //     }
-    //     else{
-    //         return this.tasksService.getAllTasks();
-    //     }
-        
-    // }
+    @Get()
+    getAllTasks(@Query() searchDto:SearchDto):Promise<Task[]>{
+        return this.tasksService.getTasks(searchDto);
+    }
   
     @Post()
     @UsePipes(ValidationPipe)
