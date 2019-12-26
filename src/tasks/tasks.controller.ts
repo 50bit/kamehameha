@@ -30,31 +30,31 @@ export class TasksController {
         return this.tasksService.addTask(createTaskDto)
     }
 
-    // @Delete('/:id')
-    // deleteTask(@Param('id') id:string ):void{
-    //     this.tasksService.deleteTask(id);
+    @Delete('/:id')
+    deleteTask(@Param('id',ParseIntPipe) id:number ):void{
+        this.tasksService.deleteTask(id);
         
-    // }
+    }
 
     @Get('/:id')
     getTaskById(@Param('id',ParseIntPipe) id:number):Promise<Task>{
         return this.tasksService.getTaskById(id);
     }
 
-    // @Patch('/:id')
-    // updateTask(
-    //     @Param('id') id:string ,
-    //     @Body() createTaskDto :CreateTaskDto 
-    // ):Task{
-    //     return this.tasksService.updateTask(id,createTaskDto);
-    // }
+    @Patch('/:id')
+    updateTask(
+        @Param('id',ParseIntPipe) id:number ,
+        @Body() createTaskDto :CreateTaskDto 
+    ):Promise<Task>{
+        return this.tasksService.updateTask(id,createTaskDto);
+    }
 
-    // @Patch('/:id/status')
-    // updateTaskStatus(
-    //     @Param('id') id:string ,
-    //     @Body('status',StatusValidationPipe) status:TaskStatus 
-    // ):Task{
-    //     return this.tasksService.updateTaskStatus(id,status);
-    // }
+    @Patch('/:id/status')
+    updateTaskStatus(
+        @Param('id',ParseIntPipe) id:number ,
+        @Body('status',StatusValidationPipe) status:TaskStatus 
+    ):Promise<Task>{
+        return this.tasksService.updateTaskStatus(id,status);
+    }
     
 }
