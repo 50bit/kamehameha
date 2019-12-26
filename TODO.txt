@@ -1,0 +1,9 @@
+TODO:
+
+- GraphQl
+- Code refining and files renaming 
+- GUI
+- Extend functionality 
+- Authentication 
+- Authorization
+
