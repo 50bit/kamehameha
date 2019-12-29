@@ -4,6 +4,6 @@ TODO:
 - Code refining and files renaming ✔️
 - GUI
 - Extend functionality 
-- Authentication 
-- Authorization
+- Authentication ✔️
+- Authorization ✔️
 

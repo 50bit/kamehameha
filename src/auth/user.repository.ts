@@ -20,10 +20,28 @@ export class UserRepository extends Repository<User>{
         try{
             await user.save();
         }catch(error){
-            console.log(error.message)
+            if(error.code === '23505') throw new ConflictException();
+            else throw new InternalServerErrorException();
+        }
+    }
+
+    async signIn(authDto:AuthDto):Promise<string>{
+        const {username , password} = authDto ;
+        
+        const user = await this.findOne({username});
+    
+        if(user && this.validatePassword(password,user.password)){
+            return username;
+        }
+        else{
+            return "";
         }
         
-        
+       
+    }
+
+    async validatePassword(password , hash){
+        return await bcrypt.compareSync(password, hash);
     }
 
 }
