@@ -5,16 +5,12 @@ type Task {
   userId: ID!
 }
 
-# type searchDto{
-#   status: String!
-#   search: String!
-# }
+
 
 
 type Query {
-  test: String!
   tasks: [Task!]
-  # taskById(id:ID!):Task!
+  taskById(id:ID!):Task!
   # getTasksBy(searchDto:searchDto):[Task!]
 }
 

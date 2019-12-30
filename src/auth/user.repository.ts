@@ -7,7 +7,7 @@ import { ConflictException, InternalServerErrorException } from "@nestjs/common"
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
     
-    async signUp(authDto:AuthDto):Promise<void>{
+    async signUp(authDto:AuthDto):Promise<User>{
         const {username , password } = authDto;
         const user = new User();
         user.username = username;
@@ -19,6 +19,8 @@ export class UserRepository extends Repository<User>{
      
         try{
             await user.save();
+            delete user.password;
+            return user
         }catch(error){
             if(error.code === '23505') throw new ConflictException();
             else throw new InternalServerErrorException();

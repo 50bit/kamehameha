@@ -15,21 +15,25 @@ export class AuthService {
         private jwtService : JwtService 
     ){}
 
-    async signUp(authDto:AuthDto):Promise<void>{
-        return this.userRepository.signUp(authDto);
+    async signUp(authDto:AuthDto):Promise<User>{
+        return await this.userRepository.signUp(authDto);
     }
 
-    async signIn(authDto:AuthDto):Promise<{accessToken:string}>{
+    async signIn(authDto:AuthDto):Promise<{username:string,token:string}>{
         const username = await this.userRepository.signIn(authDto);
         if(!username){
             throw new UnauthorizedException();
         }
         const payload : Payload = {username};
-        const accessToken = await this.jwtService.sign(payload);
-        return {accessToken};
+        const token = await this.jwtService.sign(payload);
+        return {username,token};
     }
 
     async users():Promise<User[]>{
         return await this.userRepository.find();
+    }
+
+    async getUserById(id:number):Promise<User>{
+        return await this.userRepository.findOne(id);
     }
 }

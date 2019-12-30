@@ -13,7 +13,8 @@ import { User } from '../auth/user.entity';
 @UseGuards(AuthGuard())
 export class TaskController {
     constructor(private readonly tasksService : TaskService) {}
-
+    
+    // DONE without authorization and search filter
     // @Get()
     // getAllTasks(
     //     @Query() searchDto:SearchDto,
@@ -21,13 +22,7 @@ export class TaskController {
     // ):Promise<Task[]>{
     //     return this.tasksService.getTasks(searchDto,user);
     // }
-    @Get()
-    getAllTasks(
-        @Query() searchDto:SearchDto,
-        //@GetUesr() user:User
-    ):Promise<Task[]>{
-        return this.tasksService.getTasks(searchDto);
-    }
+    
   
     @Post()
     @UsePipes(ValidationPipe)
@@ -48,12 +43,13 @@ export class TaskController {
         
     }
 
-    @Get('/:id')
-    getTaskById(
-        @Param('id',ParseIntPipe) id:number
-    ):Promise<Task>{
-        return this.tasksService.getTaskById(id);
-    }
+    // DONE without authorization
+    // @Get('/:id')
+    // getTaskById(
+    //     @Param('id',ParseIntPipe) id:number
+    // ):Promise<Task>{
+    //     return this.tasksService.getTaskById(id);
+    // }
 
     @Patch('/:id')
     updateTask(

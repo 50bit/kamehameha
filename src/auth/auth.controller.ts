@@ -10,15 +10,17 @@ export class AuthController {
 
     constructor(private authService:AuthService){}
 
-    @Post('/signup')
-    signUp(@Body(ValidationPipe) authDto:AuthDto):Promise<void>{
-        return this.authService.signUp(authDto);
-    }
+    //DONE
+    // @Post('/signup')
+    // signUp(@Body(ValidationPipe) authDto:AuthDto):Promise<void>{
+    //     return this.authService.signUp(authDto);
+    // }
 
-    @Post('/signin')
-    signIn(@Body(ValidationPipe) authDto:AuthDto):Promise<{accessToken:string}>{
-        return this.authService.signIn(authDto);
-    }
+    // DONE
+    // @Post('/signin')
+    // signIn(@Body(ValidationPipe) authDto:AuthDto):Promise<{accessToken:string}>{
+    //     return this.authService.signIn(authDto);
+    // }
 
     @Post('/user')
     @UseGuards(AuthGuard())

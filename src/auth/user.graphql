@@ -4,8 +4,18 @@ type User {
     tasks:[Task]
 }
 
+type Auth {
+    username:String!
+    token:String!
+}
+
 
 type Query{
-    hello: String!
     users:[User!]
+    getUserById(id:Int!):User!
+}
+
+type Mutation{
+    signIn(username:String! , password:String!):Auth!
+    signUp(username:String! , password:String!):Auth!
 }
