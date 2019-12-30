@@ -16,12 +16,21 @@ export class TaskService {
         private taskRepository : TaskRepository
     ){}
 
-    async getTasks(searchDto : SearchDto, user:User):Promise<Task[]>{
-        return this.taskRepository.getTasks(searchDto,user)
+    // async getTasks(searchDto : SearchDto, user:User):Promise<Task[]>{
+    //     return await this.taskRepository.getTasks(searchDto,user)
+    // }
+
+    async getAllTasks():Promise<Task[]>{
+        console.log(await this.taskRepository.find())
+        return await this.taskRepository.find();
     }
 
-    async getTaskById(id:number,user:User){
-        const found = await this.taskRepository.findOne({where:{id , userId:user.id}});
+    async getTasks(searchDto : SearchDto):Promise<Task[]>{
+        return await this.taskRepository.getTasks(searchDto)
+    }
+
+    async getTaskById(id:number){
+        const found = await this.taskRepository.findOne(id);
         if(!found){
             throw new NotFoundException(`task with ID ${id} not found`);
         }
@@ -39,7 +48,7 @@ export class TaskService {
 
     async updateTask(id:number , createTaskDto:CreateTaskDto,user:User):Promise<Task>{
         const {title , description} = createTaskDto ;
-        const task = await this.getTaskById(id,user);
+        const task = await this.getTaskById(id);
 
         if(title) task.title = title;
         if(description) task.description = description ;
@@ -50,7 +59,7 @@ export class TaskService {
     }
 
     async updateTaskStatus(id:number , taskStatus:TaskStatus,user:User):Promise<Task>{
-        const task = await this.getTaskById(id,user);
+        const task = await this.getTaskById(id);
         task.status = taskStatus ;
         await task.save();
 

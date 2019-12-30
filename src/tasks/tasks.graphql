@@ -1,0 +1,20 @@
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+  userId: ID!
+}
+
+# type searchDto{
+#   status: String!
+#   search: String!
+# }
+
+
+type Query {
+  test: String!
+  tasks: [Task!]
+  # taskById(id:ID!):Task!
+  # getTasksBy(searchDto:searchDto):[Task!]
+}
+

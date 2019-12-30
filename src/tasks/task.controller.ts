@@ -14,12 +14,19 @@ import { User } from '../auth/user.entity';
 export class TaskController {
     constructor(private readonly tasksService : TaskService) {}
 
+    // @Get()
+    // getAllTasks(
+    //     @Query() searchDto:SearchDto,
+    //     @GetUesr() user:User
+    // ):Promise<Task[]>{
+    //     return this.tasksService.getTasks(searchDto,user);
+    // }
     @Get()
     getAllTasks(
         @Query() searchDto:SearchDto,
-        @GetUesr() user:User
+        //@GetUesr() user:User
     ):Promise<Task[]>{
-        return this.tasksService.getTasks(searchDto,user);
+        return this.tasksService.getTasks(searchDto);
     }
   
     @Post()
@@ -43,10 +50,9 @@ export class TaskController {
 
     @Get('/:id')
     getTaskById(
-        @Param('id',ParseIntPipe) id:number,
-        @GetUesr() user:User
+        @Param('id',ParseIntPipe) id:number
     ):Promise<Task>{
-        return this.tasksService.getTaskById(id,user);
+        return this.tasksService.getTaskById(id);
     }
 
     @Patch('/:id')

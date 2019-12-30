@@ -6,4 +6,5 @@ TODO:
 - Extend functionality 
 - Authentication ✔️
 - Authorization ✔️
+- Interceptor
 

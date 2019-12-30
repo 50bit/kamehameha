@@ -4,6 +4,7 @@ import { UserRepository } from './user.repository';
 import { AuthDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Payload } from './jwt-payload.interface';
+import { User } from './user.entity';
 
 @Injectable()
 export class AuthService {
@@ -26,5 +27,9 @@ export class AuthService {
         const payload : Payload = {username};
         const accessToken = await this.jwtService.sign(payload);
         return {accessToken};
+    }
+
+    async users():Promise<User[]>{
+        return await this.userRepository.find();
     }
 }
